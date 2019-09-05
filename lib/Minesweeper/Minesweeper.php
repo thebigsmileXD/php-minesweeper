@@ -3,15 +3,17 @@ namespace Minesweeper;
 
 class Minesweeper {
 
-	/**
-	 * Build a new grid
-	 *
-	 * @param  int  $rows
-	 * @param  int  $columns
-	 * @param  int  $mines
-	 *
-	 * @return \Minesweeper\Grid
-	 */
+    /**
+     * Build a new grid
+     *
+     * @param  int $rows
+     * @param  int $columns
+     * @param  int $mines
+     *
+     * @return \Minesweeper\Grid
+     * @throws Exception\InvalidPositionException
+     * @throws Exception\InvalidPositionException
+     */
 	public function buildGrid($rows, $columns, $mines=10)
 	{
 		// Negative mines

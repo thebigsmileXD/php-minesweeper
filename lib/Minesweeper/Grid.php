@@ -1,12 +1,9 @@
 <?php
 namespace Minesweeper;
 
-use SebastianBergmann\RecursionContext\Exception;
-
 use Minesweeper\Exception\GameOverException;
 use Minesweeper\Exception\InvalidPositionException;
 use Minesweeper\Exception\SquareAlreadyRevealedException;
-
 use Minesweeper\Square\EmptySquare;
 use Minesweeper\Square\MineSquare;
 use Minesweeper\Square\Square;
@@ -43,15 +40,14 @@ class Grid {
 	 */
 	private $game_has_initiated = false;
 
-
-
-	/**
-	 * Construct Grid with a grid size.
-	 *
-	 * @param  int  $rows
-	 * @param  int  $columns
-	 * @param  int  $mines
-	 */
+    /**
+     * Construct Grid with a grid size.
+     *
+     * @param  int $rows
+     * @param  int $columns
+     * @param  int $mines
+     * @throws InvalidPositionException
+     */
 	public function __construct($rows=8, $columns=8, $mines=10)
 	{
 		// Negative number
@@ -95,10 +91,10 @@ class Grid {
 		return $this->grid;
 	}
 
-
-	/**
-	 * Reset the grid so it only consists of empty squares
-	 */
+    /**
+     * Reset the grid so it only consists of empty squares
+     * @throws InvalidPositionException
+     */
 	public function reset()
 	{
 		// Fill whole grid with empty squares
@@ -143,29 +139,28 @@ class Grid {
 		return $this->number_of_mines;
 	}
 
-	/**
-	 * Add square to grid. Returns the position on success.
-	 *
-	 * @param   Square    $square
-	 *
-	 * @param   array     $position  array with key 0 for row and key 1 for
-	 *                               column zero based.
-	 *
-	 * @param   boolean   $fix_square_surroundings
-	 *        Whether to fill square surroundings afterwards. When disabled
-	 *        (for improved performance), make sure running
-	 *        fillSurroundingSquares()
-	 *
-	 * @param	array	  $avoid_position
-	 *        Position to avoid placing mines. Only works if $position
-	 *   	  is set to null. It will also avoid place mines on surroundings
-	 * 		  of this position
-	 *
-	 *
-	 * @throws  InvalidPositionException
-	 *
-	 * @return  int  position
-	 */
+    /**
+     * Add square to grid. Returns the position on success.
+     *
+     * @param   Square $square
+     *
+     * @param   array $position array with key 0 for row and key 1 for
+     *                               column zero based.
+     *
+     * @param   boolean $fix_square_surroundings
+     *        Whether to fill square surroundings afterwards. When disabled
+     *        (for improved performance), make sure running
+     *        fillSurroundingSquares()
+     *
+     * @param    array $avoid_position
+     *        Position to avoid placing mines. Only works if $position
+     *      is set to null. It will also avoid place mines on surroundings
+     *          of this position
+     *
+     *
+     * @return array position
+     * @throws InvalidPositionException
+     */
 	public function addSquare(Square $square,
 	                          array $position = NULL,
 	                          $fix_square_surroundings = TRUE,
@@ -317,13 +312,14 @@ class Grid {
 		return $this->isGameOver();
 	}
 
-	/**
-	 * Get position by square
-	 *
-	 * @param Square $square
-	 *
-	 * @return array|null Position of the square
-	 */
+    /**
+     * Get position by square
+     *
+     * @param Square $square
+     *
+     * @return array|null Position of the square
+     * @throws InvalidPositionException
+     */
 	public function getPositionBySquare(Square $square)
 	{
 		for ($row=0; $row < $this->getRows(); $row++)
@@ -468,13 +464,14 @@ class Grid {
 		return TRUE;
 	}
 
-	/**
-	 * Returns the number of squares
-	 *
-	 * @param  string  $type
-	 *
-	 * @return  int  number of squares
-	 */
+    /**
+     * Returns the number of squares
+     *
+     * @param  string $type
+     *
+     * @return  int  number of squares
+     * @throws InvalidPositionException
+     */
 	public function numberOfSquares($type=NULL)
 	{
 		// No type
@@ -497,9 +494,10 @@ class Grid {
 		return $number;
 	}
 
-	/**
-	 * Test whether all non-gameover squares are revealed
-	 */
+    /**
+     * Test whether all non-gameover squares are revealed
+     * @throws InvalidPositionException
+     */
 	public function allRevealed()
 	{
 		for ($row=0; $row < $this->getRows(); $row++)
@@ -515,10 +513,12 @@ class Grid {
 		return TRUE;
 	}
 
-	/**
-	 * Fills the surrounding squares on all squares within this grid. Use this
-	 * function when using addSquare without `$fix_square_surroundings = TRUE`
-	 */
+    /**
+     * Fills the surrounding squares on all squares within this grid. Use this
+     * function when using addSquare without `$fix_square_surroundings = TRUE`
+     * @throws InvalidPositionException
+     * @throws InvalidPositionException
+     */
 	public function fillSurroundingSquares()
 	{
 		for ($row=0; $row < $this->getRows(); $row++)
@@ -577,11 +577,11 @@ class Grid {
 			}
 		}
 		// Nothing to avoid
-		else {
+        //else {
 			return array(
 				rand(0, $this->getRows() - 1),
 				rand(0, $this->getColumns() - 1)
 			);
-		}
+        //}
 	}
 }

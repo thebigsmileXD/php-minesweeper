@@ -1,12 +1,10 @@
 <?php
 namespace Minesweeper\Square;
 
-use Minesweeper\Grid;
-
 class EmptySquare extends Square {
 
 	/**
-	 * @see Minesweeper\Square.Square::isGameOver()
+     * @see \Minesweeper\Square.Square::isGameOver()
 	 */
 	public function isGameOver()
 	{
@@ -14,7 +12,7 @@ class EmptySquare extends Square {
 	}
 
 	/**
-	 * @see Minesweeper\Square.Square::isAutoRevealable()
+     * @see \Minesweeper\Square.Square::isAutoRevealable()
 	 */
 	public function isAutoRevealable()
 	{
@@ -22,7 +20,7 @@ class EmptySquare extends Square {
 	}
 
 	/**
-	 * @see Minesweeper\Square.Square::__toString()
+     * @see \Minesweeper\Square.Square::__toString()
 	 */
 	public function __toString()
 	{

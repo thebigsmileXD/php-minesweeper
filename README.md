@@ -1,5 +1,4 @@
 # PHP-Minesweeper
-
 This is an object-oriented PHP implementation of the game Minesweeper. It was made
 to practice test-driven development. So this minesweeper implementation is
 unit tested.
@@ -63,3 +62,10 @@ There will be no demo from me
 
 * Prevent infinite loop when creating a grid with more mines
 
+Fork information
+---
+Cut down version, ported to PHP7 and for use in PMMP
+
+All credits go to the creators and contributors of https://github.com/mauserrifle/php-minesweeper
+
+See LICENSE

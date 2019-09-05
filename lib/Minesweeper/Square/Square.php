@@ -1,8 +1,6 @@
 <?php
 namespace Minesweeper\Square;
 
-use Minesweeper\Grid;
-
 /**
  * Base class for squares. Defines whether the square makes you lose the game
  * and holds it's direct surrounding squares for easier recursive
@@ -56,6 +54,7 @@ abstract class Square {
 				}
 			}
 		}
+        return $game_over;
 	}
 
 	/**
@@ -67,7 +66,7 @@ abstract class Square {
 	}
 
 	/**
-	 * Wheter the squalre has been flagged as mine or not
+     * Whether the square has been flagged as mine or not
 	 *
 	 * @return boolean
 	 */
