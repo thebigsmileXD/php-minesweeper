@@ -9,7 +9,7 @@ class EmptySquare extends Square
     /**
      * @see \Minesweeper\Square.Square::isGameOver()
      */
-    public function isGameOver()
+    public function isGameOver(): bool
     {
         return false;
     }
@@ -17,7 +17,7 @@ class EmptySquare extends Square
     /**
      * @see \Minesweeper\Square.Square::isAutoRevealable()
      */
-    public function isAutoRevealable()
+    public function isAutoRevealable(): bool
     {
         return true;
     }
@@ -25,7 +25,7 @@ class EmptySquare extends Square
     /**
      * @see \Minesweeper\Square.Square::__toString()
      */
-    public function __toString()
+    public function __toString(): string
     {
         return 'empty';
     }

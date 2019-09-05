@@ -32,7 +32,7 @@ abstract class Square
      *
      * @return  boolean  Whether the game is over
      */
-    public function reveal()
+    public function reveal(): bool
     {
         // Set revealed
         $this->revealed = true;
@@ -59,7 +59,7 @@ abstract class Square
     /**
      * Toggle flag
      */
-    public function toggleFlag()
+    public function toggleFlag(): void
     {
         $this->flagged = !$this->flagged;
     }
@@ -69,7 +69,7 @@ abstract class Square
      *
      * @return boolean
      */
-    public function isFlagged()
+    public function isFlagged(): bool
     {
         return $this->flagged;
     }
@@ -79,7 +79,7 @@ abstract class Square
      *
      * @return  boolean
      */
-    public function isRevealed()
+    public function isRevealed(): bool
     {
         return $this->revealed;
     }
@@ -87,18 +87,18 @@ abstract class Square
     /**
      * Returns whether this square makes the game over
      *
-     * #return  boolean
+     * @return  boolean
      */
-    abstract public function isGameOver();
+    abstract public function isGameOver(): bool;
 
     /**
      * Whether this square may be auto revealed by surrounding squares
      *
      * @return  boolean
      */
-    abstract public function isAutoRevealable();
+    abstract public function isAutoRevealable(): bool;
 
-    public function addSurroundingSquare(Square $square)
+    public function addSurroundingSquare(Square $square): void
     {
         array_push($this->surrounding_squares, $square);
     }
@@ -108,7 +108,7 @@ abstract class Square
      *
      * @return Square[]
      */
-    public function getSurroundingSquares()
+    public function getSurroundingSquares(): array
     {
         return $this->surrounding_squares;
     }
@@ -118,7 +118,7 @@ abstract class Square
      *
      * @param Square[] $surrounding_squares
      */
-    public function setSurroundingSquares(array $surrounding_squares)
+    public function setSurroundingSquares(array $surrounding_squares): void
     {
         $this->surrounding_squares = $surrounding_squares;
     }
@@ -128,7 +128,7 @@ abstract class Square
      *
      * @return  int
      */
-    public function numberOfSurroundingGameOverSquares()
+    public function numberOfSurroundingGameOverSquares(): int
     {
         $game_overs = 0;
         foreach ($this->getSurroundingSquares() as $square) {
@@ -143,5 +143,5 @@ abstract class Square
     /**
      * Description of square
      */
-    abstract public function __toString();
+    abstract public function __toString(): string;
 }

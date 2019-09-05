@@ -9,7 +9,7 @@ class MineSquare extends Square
     /**
      * @see \Minesweeper\Square.Square::isGameOver()
      */
-    public function isGameOver()
+    public function isGameOver(): bool
     {
         return true;
     }
@@ -17,7 +17,7 @@ class MineSquare extends Square
     /**
      * @see \Minesweeper\Square.Square::isAutoRevealable()
      */
-    public function isAutoRevealable()
+    public function isAutoRevealable(): bool
     {
         return false;
     }
@@ -25,7 +25,7 @@ class MineSquare extends Square
     /**
      * @see \Minesweeper\Square.Square::__toString()
      */
-    public function __toString()
+    public function __toString(): string
     {
         return 'mine';
     }
