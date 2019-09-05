@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Minesweeper;
 
 class Minesweeper {
@@ -14,7 +15,7 @@ class Minesweeper {
      * @throws Exception\InvalidPositionException
      * @throws Exception\InvalidPositionException
      */
-	public function buildGrid($rows, $columns, $mines=10)
+    public function buildGrid(int $rows, int $columns, int $mines = 10)
 	{
 		// Negative mines
 		if ( ! is_numeric($mines) OR $mines < 0)
