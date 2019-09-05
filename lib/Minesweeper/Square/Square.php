@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Minesweeper\Square;
 
 /**
@@ -8,145 +9,139 @@ namespace Minesweeper\Square;
  * manipulations.
  *
  */
-abstract class Square {
+abstract class Square
+{
 
-	/**
-	 * @var  boolean  Whether the square is already revealed
-	 */
-	private $revealed = FALSE;
+    /**
+     * @var  boolean  Whether the square is already revealed
+     */
+    private $revealed = false;
 
-	/**
+    /**
      * @var Square[]  Simple array with surrounding squares
-	 */
+     */
     private $surrounding_squares = [];
 
-	/**
-	 * @var bool	Whether the square has been flagged as mine or not
-	 */
-	private $flagged = FALSE;
+    /**
+     * @var bool    Whether the square has been flagged as mine or not
+     */
+    private $flagged = false;
 
-	/**
-	 * Let the square reveal itself and its surroundings
-	 *
-	 * @return  boolean  Whether the game is over
-	 */
-	public function reveal()
-	{
-		// Set revealed
-		$this->revealed = TRUE;
-		$this->flagged = FALSE;
+    /**
+     * Let the square reveal itself and its surroundings
+     *
+     * @return  boolean  Whether the game is over
+     */
+    public function reveal()
+    {
+        // Set revealed
+        $this->revealed = true;
+        $this->flagged = false;
 
-		// Return game over
-		if ($game_over = $this->isGameOver())
-		{
-			return $game_over;
-		}
+        // Return game over
+        if ($game_over = $this->isGameOver()) {
+            return $game_over;
+        }
 
-		// Reveal surrounding squares if there are no game overs nearby
-		if ($this->numberOfSurroundingGameOverSquares() === 0)
-		{
-			foreach ($this->getSurroundingSquares() as $square)
-			{
-				// Is auto revealable and not already revealed
-				if ($square->isAutoRevealable() AND ! $square->isRevealed())
-				{
-					// Reveal
-					$square->reveal();
-				}
-			}
-		}
+        // Reveal surrounding squares if there are no game overs nearby
+        if ($this->numberOfSurroundingGameOverSquares() === 0) {
+            foreach ($this->getSurroundingSquares() as $square) {
+                // Is auto revealable and not already revealed
+                if ($square->isAutoRevealable() AND !$square->isRevealed()) {
+                    // Reveal
+                    $square->reveal();
+                }
+            }
+        }
         return $game_over;
-	}
+    }
 
-	/**
-	 * Toggle flag
-	 */
-	public function toggleFlag()
-	{
-		$this->flagged = ! $this->flagged;
-	}
+    /**
+     * Toggle flag
+     */
+    public function toggleFlag()
+    {
+        $this->flagged = !$this->flagged;
+    }
 
-	/**
+    /**
      * Whether the square has been flagged as mine or not
-	 *
-	 * @return boolean
-	 */
-	public function isFlagged()
-	{
-		return $this->flagged;
-	}
+     *
+     * @return boolean
+     */
+    public function isFlagged()
+    {
+        return $this->flagged;
+    }
 
-	/**
-	 * Whether the square is already revealed
-	 *
-	 * @return  boolean
-	 */
-	public function isRevealed()
-	{
-		return $this->revealed;
-	}
+    /**
+     * Whether the square is already revealed
+     *
+     * @return  boolean
+     */
+    public function isRevealed()
+    {
+        return $this->revealed;
+    }
 
-	/**
-	 * Returns whether this square makes the game over
-	 *
-	 * #return  boolean
-	 */
-	abstract public function isGameOver();
+    /**
+     * Returns whether this square makes the game over
+     *
+     * #return  boolean
+     */
+    abstract public function isGameOver();
 
-	/**
-	 * Whether this square may be auto revealed by surrounding squares
-	 *
-	 * @return  boolean
-	 */
-	abstract public function isAutoRevealable();
+    /**
+     * Whether this square may be auto revealed by surrounding squares
+     *
+     * @return  boolean
+     */
+    abstract public function isAutoRevealable();
 
+    public function addSurroundingSquare(Square $square)
+    {
+        array_push($this->surrounding_squares, $square);
+    }
 
-	public function addSurroundingSquare(Square $square)
-	{
-		array_push($this->surrounding_squares, $square);
-	}
-
-	/**
-	 * Get the surrounding squares
-	 *
+    /**
+     * Get the surrounding squares
+     *
      * @return Square[]
-	 */
-	public function getSurroundingSquares()
-	{
-		return $this->surrounding_squares;
-	}
+     */
+    public function getSurroundingSquares()
+    {
+        return $this->surrounding_squares;
+    }
 
-	/**
-	 * Set surrounding squares
-	 *
+    /**
+     * Set surrounding squares
+     *
      * @param Square[] $surrounding_squares
-	 */
-	public function setSurroundingSquares(array $surrounding_squares)
-	{
-		$this->surrounding_squares = $surrounding_squares;
-	}
+     */
+    public function setSurroundingSquares(array $surrounding_squares)
+    {
+        $this->surrounding_squares = $surrounding_squares;
+    }
 
-	/**
-	 * Return how much surrounding squares will be a game over
-	 *
-	 * @return  int
-	 */
-	public function numberOfSurroundingGameOverSquares()
-	{
-		$game_overs = 0;
-		foreach ($this->getSurroundingSquares() as $square)
-		{
-			if ($square->isGameOver())
-			{
-				$game_overs++;
-			}
-		}
+    /**
+     * Return how much surrounding squares will be a game over
+     *
+     * @return  int
+     */
+    public function numberOfSurroundingGameOverSquares()
+    {
+        $game_overs = 0;
+        foreach ($this->getSurroundingSquares() as $square) {
+            if ($square->isGameOver()) {
+                $game_overs++;
+            }
+        }
 
-		return $game_overs;
-	}
+        return $game_overs;
+    }
 
-	/**
-	 * Description of square
-	 */
-	abstract public function __toString();
+    /**
+     * Description of square
+     */
+    abstract public function __toString();
 }
