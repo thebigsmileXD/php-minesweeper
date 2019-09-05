@@ -11,7 +11,7 @@ I hope anyone finds it useful.
 
 ## Requirements
 
-* PHP 5.3
+* PHP 7.4
 * Composer (https://getcomposer.org/)
 
 ## Installation details
@@ -39,7 +39,7 @@ This should output:
 
 ## Playing
 
-PHP 5.4 is easy and fast:
+PHP 7.4 is easy and fast:
 
     cd public
     php -S localhost:8000
