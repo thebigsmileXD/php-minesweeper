@@ -16,9 +16,9 @@ abstract class Square {
 	private $revealed = FALSE;
 
 	/**
-	 * @var  array  Simple array with surrounding squares
+     * @var Square[]  Simple array with surrounding squares
 	 */
-	private $surrounding_squares = array();
+    private $surrounding_squares = [];
 
 	/**
 	 * @var bool	Whether the square has been flagged as mine or not
@@ -109,7 +109,7 @@ abstract class Square {
 	/**
 	 * Get the surrounding squares
 	 *
-	 * @return  array
+     * @return Square[]
 	 */
 	public function getSurroundingSquares()
 	{
@@ -119,7 +119,7 @@ abstract class Square {
 	/**
 	 * Set surrounding squares
 	 *
-	 * @param array $surrounding_squares
+     * @param Square[] $surrounding_squares
 	 */
 	public function setSurroundingSquares(array $surrounding_squares)
 	{

@@ -15,16 +15,14 @@ class Minesweeper {
      * @throws Exception\InvalidPositionException
      * @throws Exception\InvalidPositionException
      */
-    public function buildGrid(int $rows, int $columns, int $mines = 10)
+    public function buildGrid(int $rows, int $columns, int $mines = 10): Grid
 	{
 		// Negative mines
-		if ( ! is_numeric($mines) OR $mines < 0)
+        if ($mines < 0)
 		{
 			$mines = 10;
 		}
 
-		$grid = new Grid($rows, $columns, $mines);
-
-		return $grid;
+        return new Grid($rows, $columns, $mines);
 	}
 }

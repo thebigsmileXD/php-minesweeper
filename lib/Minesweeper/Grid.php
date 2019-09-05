@@ -14,7 +14,7 @@ class Grid {
 	/**
 	 * @var  Square[][]   array containing the rows and columns (e.g. [8][8])
 	 */
-	private $grid = array();
+    private $grid = [];
 
 	/**
 	 * @var  boolean  Whether the game is over. Defaults FALSE
@@ -29,7 +29,7 @@ class Grid {
 	/**
 	 * @var  array   Positions that are already filled randomly.
 	 */
-	private $occupied_random_positions = array();
+    private $occupied_random_positions = [];
 
 	/**
 	 * @var int	Number of mines in game.
@@ -49,22 +49,22 @@ class Grid {
      * @param  int $mines
      * @throws InvalidPositionException
      */
-	public function __construct($rows=8, $columns=8, $mines=10)
+    public function __construct(int $rows = 8, int $columns = 8, int $mines = 10)
 	{
 		// Negative number
-		if ( ! is_numeric($rows) OR $rows < 0)
+        if ($rows < 0)
 		{
 			$rows = 8;
 		}
 
 		// Negative number
-		if (! is_numeric($columns) OR $columns < 0)
+        if ($columns < 0)
 		{
 			$columns = 8;
 		}
 
 		// Negative number
-		if (! is_numeric($mines) OR $mines < 0)
+        if ($mines < 0)
 		{
 			$mines = 10;
 		}
@@ -87,7 +87,7 @@ class Grid {
 	 *
 	 * @return  array  grid
 	 */
-	public function getGrid()
+    public function getGrid(): array
 	{
 		return $this->grid;
 	}
@@ -96,13 +96,13 @@ class Grid {
      * Reset the grid so it only consists of empty squares
      * @throws InvalidPositionException
      */
-	public function reset()
+    public function reset(): void
 	{
 		// Fill whole grid with empty squares
 		for ($row=0; $row < $this->getRows(); $row++)
 		for ($column=0; $column < $this->getColumns(); $column++)
 		{
-			$this->addSquare(new EmptySquare, array($row, $column), FALSE);
+            $this->addSquare(new EmptySquare, [$row, $column], false);
 		}
 
 		// Fill surrounding squares of all squares
@@ -114,7 +114,7 @@ class Grid {
 	 *
 	 * @return  int
 	 */
-	public function getColumns()
+    public function getColumns(): int
 	{
 		return count($this->grid[0]);
 	}
@@ -125,7 +125,7 @@ class Grid {
 	 *
 	 * @return  int
 	 */
-	public function getRows()
+    public function getRows(): int
 	{
 		return count($this->grid);
 	}
@@ -135,7 +135,7 @@ class Grid {
 	 *
 	 * @return  int
 	 */
-	public function getNumberOfMines()
+    public function getNumberOfMines(): int
 	{
 		return $this->number_of_mines;
 	}
@@ -163,9 +163,9 @@ class Grid {
      * @throws InvalidPositionException
      */
 	public function addSquare(Square $square,
-	                          array $position = NULL,
-	                          $fix_square_surroundings = TRUE,
-							  $avoid_position = NULL)
+                              ?array $position = null,
+                              bool $fix_square_surroundings = true,
+                              ?array $avoid_position = null): array
 	{
 		// Use given position
 		if ($position)
@@ -220,7 +220,7 @@ class Grid {
 	 *
 	 * @return Square
 	 */
-	public function getSquare(array $position)
+    public function getSquare(array $position): Square
 	{
 		if( ! $this->isValidPosition($position))
 		{
@@ -238,7 +238,7 @@ class Grid {
 	*
 	* @param       array $position the array containing the position to reveal
 	*/
-	public function toggleFlag(array $position)
+    public function toggleFlag(array $position): void
 	{
 		$square = $this->getSquare($position);
 
@@ -262,7 +262,7 @@ class Grid {
 	 *
 	 * @return  boolean  game over
 	 */
-	public function reveal(array $position)
+    public function reveal(array $position): bool
 	{
 		// Game over
 		if ($this->isGameOver())
@@ -321,14 +321,14 @@ class Grid {
      * @return array|null Position of the square
      * @throws InvalidPositionException
      */
-	public function getPositionBySquare(Square $square)
+    public function getPositionBySquare(Square $square): ?array
 	{
 		for ($row=0; $row < $this->getRows(); $row++)
 		for ($column=0; $column < $this->getColumns(); $column++)
 		{
-			if ($this->getSquare(array($row, $column)) === $square)
+            if ($this->getSquare([$row, $column]) === $square)
 			{
-				return array($row, $column);
+                return [$row, $column];
 			}
 		}
 
@@ -356,7 +356,7 @@ class Grid {
 	 *
 	 * @return  array  position
 	 */
-	public function getSurroundingSquaresByPosition(array $position)
+    public function getSurroundingSquaresByPosition(array $position): array
 	{
 		// Not a valid position
 		if ( ! $this->isValidPosition($position))
@@ -365,7 +365,7 @@ class Grid {
 		}
 
 		// Get all surrounding squares (from top left to left)
-		$squares = array(
+        $squares = [
 				// Top left
 				Arr::get(
 					Arr::get($this->grid, ($position[0] - 1)),
@@ -401,7 +401,7 @@ class Grid {
 				,
 				// Left
 				Arr::get($this->grid[$position[0]], ($position[1] - 1)),
-		);
+        ];
 
 		// Remove NULL values
 		$squares = array_values(array_filter($squares, 'is_object'));
@@ -414,7 +414,7 @@ class Grid {
 	 *
 	 * @return  boolean
 	 */
-	public function isGameOver()
+    public function isGameOver(): bool
 	{
 		return $this->game_over;
 	}
@@ -424,7 +424,7 @@ class Grid {
 	 *
 	 * @return  boolean
 	 */
-	public function isWonByPlayer()
+    public function isWonByPlayer(): bool
 	{
 		return $this->won_by_player;
 	}
@@ -434,9 +434,9 @@ class Grid {
 	 *
 	 * @param  boolean  $game_over
 	 */
-	public function setGameOver($game_over)
-	{
-		$this->game_over = (bool) $game_over;
+    public function setGameOver(bool $game_over): void
+    {
+        $this->game_over = $game_over;
 	}
 
 	/**
@@ -446,7 +446,7 @@ class Grid {
 	 *
 	 * @return bool Either the position is valid or not
 	 */
-	public function isValidPosition(array $position)
+    public function isValidPosition(array $position): bool
 	{
 		// Valid row, column?
 		if ( ! $x = is_numeric(Arr::get($position, 0)) OR
@@ -468,12 +468,12 @@ class Grid {
     /**
      * Returns the number of squares
      *
-     * @param  string $type
+     * @param  null|string $type
      *
      * @return  int  number of squares
      * @throws InvalidPositionException
      */
-	public function numberOfSquares($type=NULL)
+    public function numberOfSquares(?string $type = null): int
 	{
 		// No type
 		if ( ! $type)
@@ -486,7 +486,7 @@ class Grid {
 		for ($row=0; $row < $this->getRows(); $row++)
 		for ($column=0; $column < $this->getColumns(); $column++)
 		{
-			if ($square = $this->getSquare(array($row, $column)) instanceof $type)
+            if ($square = $this->getSquare([$row, $column]) instanceof $type)
 			{
 				$number++;
 			}
@@ -497,14 +497,15 @@ class Grid {
 
     /**
      * Test whether all non-gameover squares are revealed
+     * @return bool
      * @throws InvalidPositionException
      */
-	public function allRevealed()
+    public function allRevealed(): bool
 	{
 		for ($row=0; $row < $this->getRows(); $row++)
 		for ($column=0; $column < $this->getColumns(); $column++)
 		{
-			$square = $this->getSquare(array($row, $column));
+            $square = $this->getSquare([$row, $column]);
 			if ( ! $square->isGameOver() AND ! $square->isRevealed())
 			{
 				RETURN FALSE;
@@ -520,12 +521,12 @@ class Grid {
      * @throws InvalidPositionException
      * @throws InvalidPositionException
      */
-	public function fillSurroundingSquares()
+    public function fillSurroundingSquares(): void
 	{
 		for ($row=0; $row < $this->getRows(); $row++)
 			for ($column=0; $column < $this->getColumns(); $column++)
 			{
-				$position = array($row, $column);
+                $position = [$row, $column];
 
 				// Get square first
 				$square = $this->getSquare($position);
@@ -551,7 +552,7 @@ class Grid {
 	 *
 	 * @return  array  position
 	 */
-	public function createRandomPosition($avoid_position = null)
+    public function createRandomPosition(?array $avoid_position = null): array
 	{
 		// Avoid position
 		if ($avoid_position !== NULL){
@@ -579,10 +580,10 @@ class Grid {
 		}
 		// Nothing to avoid
         //else {
-			return array(
+        return [
 				rand(0, $this->getRows() - 1),
 				rand(0, $this->getColumns() - 1)
-			);
+        ];
         //}
 	}
 }
